@@ -25,7 +25,7 @@ SB Admin 2 - Dashboard
                                     Usuários Cadastrados
                                 </div>
                                 <div class="h1 mb-0 font-weight-bold text-gray-800 align-items-center">
-                                    274
+                                    {{$user}}
                                 </div>
                             </center>
                         </div>
@@ -43,7 +43,7 @@ SB Admin 2 - Dashboard
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Total de Inscrições em Cursos</div>
                                 <div class="h1 mb-0 font-weight-bold text-gray-800">
-                                    550
+                                   {{$inscricao}}
                                 </div>
                             </center>
                         </div>
@@ -62,7 +62,7 @@ SB Admin 2 - Dashboard
                                     Total de certificados Emitidos
                                 </div>
                                 <div class="h1 mb-0 font-weight-bold text-gray-800">
-                                    3527
+                                    {{$certificado}}
                                 </div>
                             </center>
                         </div>
@@ -77,11 +77,11 @@ SB Admin 2 - Dashboard
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <center>
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Cursos Publicados (Ativo)
                                 </div>
                                 <div class="h1 mb-0 font-weight-bold text-gray-800">
-                                    52
+                                    {{$cursos}}
                                 </div>
                             </center>
                         </div>
@@ -95,23 +95,14 @@ SB Admin 2 - Dashboard
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                            </div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                            <center>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Acessos
                                 </div>
-                                <div class="col">
-                                    <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar"
-                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                            aria-valuemax="100"></div>
-                                    </div>
+                                <div class="h1 mb-0 font-weight-bold text-gray-800">
+                                    {{$acessoTotal}}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -123,12 +114,13 @@ SB Admin 2 - Dashboard
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Requests</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <center>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Acessos Hoje</div>
+                                <div class="h1 mb-0 font-weight-bold text-gray-800">
+                                    {{$acessoHoje}}
+                                </div>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -162,17 +154,14 @@ SB Admin 2 - Dashboard
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-pie pt-4 pb-2">
-                        <canvas id="myPieChart"></canvas>
+                        <canvas id="PieChartCursos"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
                         <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> teste
+                            <i class="fas fa-circle text-primary"></i> Concluidos
                         </span>
                         <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Social
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-info"></i> Referral
+                            <i class="fas fa-circle text-success"></i> Cursos Pendentes
                         </span>
                     </div>
                 </div>
@@ -203,17 +192,14 @@ SB Admin 2 - Dashboard
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-pie pt-4 pb-2">
-                        <canvas id="myPieChart"></canvas>
+                        <canvas id="PieChartCursosPublicados"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
                         <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Direct
+                            <i class="fas fa-circle text-primary"></i> Cursos Publicados
                         </span>
                         <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Social
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-info"></i> Referral
+                            <i class="fas fa-circle text-success"></i> Cursos Despublicados
                         </span>
                     </div>
                 </div>
@@ -244,7 +230,7 @@ SB Admin 2 - Dashboard
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+                        <canvas id="AreaTimeLineDoAno"></canvas>
                     </div>
                 </div>
             </div>
@@ -281,4 +267,13 @@ SB Admin 2 - Dashboard
         </div>
     </div>
 </div>
+<!-- Page level plugins -->
+<script src="{{asset('srcTemplate/vendor/chart.js/Chart.min.js')}}"></script>
+<script src="{{asset('js/chart.js')}}"></script>
+<script src="{{asset('js/area.js')}}"></script>
+<script src="{{asset('js/dashboard.js')}}"></script>
+<script>
+    var dadosAcessos=[ {{$acessoHoje}} , {{$acessosSemana}} , {{$acessosMes}} , {{$acessosPrimeiroSemestre}} , {{$acessosSegndoSemestre}} ,{{$acessosAno}}];
+    DadosIniciais({{$inscricao}},{{$certificado}},{{$cursosPublicados}},{{$cursosDespublicados}},dadosAcessos);
+</script>
 @endsection
