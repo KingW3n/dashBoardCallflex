@@ -260,7 +260,7 @@ SB Admin 2 - Dashboard
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+                        <canvas id="Area5Ano"></canvas>
                     </div>
                 </div>
             </div>
@@ -274,6 +274,9 @@ SB Admin 2 - Dashboard
 <script src="{{asset('js/dashboard.js')}}"></script>
 <script>
     var dadosAcessos=[ {{$acessoHoje}} , {{$acessosSemana}} , {{$acessosMes}} , {{$acessosPrimeiroSemestre}} , {{$acessosSegndoSemestre}} ,{{$acessosAno}}];
-    DadosIniciais({{$inscricao}},{{$certificado}},{{$cursosPublicados}},{{$cursosDespublicados}},dadosAcessos);
+    let arrayAnos = [ {{$AnosDosAcessos[0]['Ano']}} ,  {{$AnosDosAcessos[1]['Ano']}}, {{$AnosDosAcessos[2]['Ano']}}, {{$AnosDosAcessos[3]['Ano']}},{{$AnosDosAcessos[4]['Ano']}}];
+    let arrayAcessos = [ {{$AnosDosAcessos[0]['Acessos']}} ,  {{$AnosDosAcessos[1]['Acessos']}}, {{$AnosDosAcessos[2]['Acessos']}}, {{$AnosDosAcessos[3]['Acessos']}},{{$AnosDosAcessos[4]['Acessos']}}]
+    DadosIniciais({{$inscricao}},{{$certificado}},{{$cursosPublicados}},{{$cursosDespublicados}},dadosAcessos, arrayAnos, arrayAcessos);
+
 </script>
 @endsection

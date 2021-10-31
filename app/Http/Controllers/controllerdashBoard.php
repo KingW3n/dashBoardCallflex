@@ -13,10 +13,9 @@ class controllerdashBoard extends Controller
     public function index(controllerRetornoDados $retornoDados)
     {
         //configura data para horario de São paulo;
-        date_default_timezone_set('America/Sao_Paulo');
         $dataHoje = Date("Y-m-d");
 
-        //Subtrai menos 1 para o betwenn
+        //Subtrai mais 1 dia para o betwenn
         $dataHojeMUm  = date('Y-m-d', strtotime($dataHoje. ' +1 days'));
 
         //subtrai 7 e 30 dias da data atual
@@ -27,6 +26,7 @@ class controllerdashBoard extends Controller
         $timelineAcessos = $retornoDados->AcesosTimeLine($dataHojeMUm, $dataSemana, $dataMes,Date("Y") );
 
         return view('dashBoard.index')
+        ->with('nomeUser', $retornoDados->NomeUser('wendel.junior@callflex.net.br'))
         ->with('user', $retornoDados->UserCount())
         ->with('certificado', $retornoDados->ActivityCount("student_certificate"))
         ->with('inscricao', $retornoDados->ActivityCount("subscribe_course"))
@@ -39,6 +39,21 @@ class controllerdashBoard extends Controller
         ->with('acessosMes', $timelineAcessos[1])
         ->with('acessosPrimeiroSemestre', $timelineAcessos[2])
         ->with('acessosSegndoSemestre', $timelineAcessos[3])
-        ->with('acessosAno', $timelineAcessos[4]);
+        ->with('acessosAno', $timelineAcessos[4])
+        ->with('AnosDosAcessos', $this->Count5_Value());
+
+    }
+
+    public function Count5_Value (){
+        $retornoDados = new controllerRetornoDados ;
+        $ArrayAcesosAnos = [];
+        $dataHoje = Date("Y-m-d");
+        for ($i= date('Y', strtotime($dataHoje. ' -4 year')); $i <= Date("Y"); $i++) {
+            $ArrayAcesosAnos[] =array(
+                "Ano" =>$i,
+                "Acessos"=>$retornoDados->AcessosHojeCount($i)
+            );
+        }
+        return $ArrayAcesosAnos;
     }
 }

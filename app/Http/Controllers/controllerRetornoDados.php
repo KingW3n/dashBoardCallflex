@@ -58,4 +58,8 @@ class controllerRetornoDados extends Controller
         return $resultadosArray;
 
     }
+    public function NomeUser(string $email)
+    {
+        return DB::table('wp_users')->where('user_email','=',$email)->select('wp_users.display_name as nome')->first();
+    }
 }
