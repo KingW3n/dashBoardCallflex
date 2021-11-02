@@ -16,4 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\controllerdashBoard@index')->name('home');
 Route::post('/', 'App\Http\Controllers\controllerdashBoard@Count5Anos')->name('Count5Anos');
-Route::get('/login', 'App\Http\Controllers\controllerLogin@index')->name('indexLogin');
+Route::match(['get', 'post'],'/login', 'App\Http\Controllers\controllerLogin@index')->name('indexLogin');
+Route::post('/login', 'App\Http\Controllers\controllerLogin@realizarLogin')->name('realizarLogin');
+Route::match(['get', 'post'], '/login/deslog','App\Http\Controllers\controllerLogin@Realizarlogout')->name('Realizarlogout');
