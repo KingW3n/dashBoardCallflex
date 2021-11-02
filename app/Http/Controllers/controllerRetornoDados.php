@@ -58,4 +58,12 @@ class controllerRetornoDados extends Controller
         return $resultadosArray;
 
     }
+
+    public function DadosUser(string $email)
+    {
+        return DB::table('wp_plugin_usersadm_login')
+        ->where('user_email','=',$email)
+        ->join('wp_users','wp_users.user_email','=','wp_plugin_usersadm_login.email')
+        ->select('wp_plugin_usersadm_login.*','wp_users.display_name as nome')->first();
+    }
 }

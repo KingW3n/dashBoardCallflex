@@ -37,7 +37,6 @@ class controllerLogin extends Controller
             }else{
                 $request->session()->put('logado','Yes');
                 $request->session()->put('email',$user->email);
-                $request->session()->put('nome',$user->display_name);
                 $resposta['login'] = true;
                 $resposta['mensagem'] = "Logado com sucesso";
 

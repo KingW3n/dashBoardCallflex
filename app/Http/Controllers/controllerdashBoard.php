@@ -29,7 +29,7 @@ class controllerdashBoard extends Controller
             $timelineAcessos = $retornoDados->AcesosTimeLine($dataHojeMUm, $dataSemana, $dataMes,Date("Y") );
 
             return view('dashBoard.index')
-            ->with('nomeUser', $request->session()->get('nome'))
+            ->with('DadosUser', $retornoDados->DadosUser($request->session()->get('email')))
             ->with('user', $retornoDados->UserCount())
             ->with('certificado', $retornoDados->ActivityCount("student_certificate"))
             ->with('inscricao', $retornoDados->ActivityCount("subscribe_course"))

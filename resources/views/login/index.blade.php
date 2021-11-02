@@ -35,7 +35,30 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block " style="padding: 10%">
+                                <?php
+                                    $rand = rand(1,5);
+                                    switch ($rand) {
+                                        case 1:
+                                            ?><img src="{{asset('img/MeninadeMascara.png')}}" style="width: 100%"><?php
+                                        break;
+                                        case 2:
+                                            ?><img src="{{asset('img/MeninadeMascara2.png')}}" style="width: 100%"><?php
+                                        break;
+                                        case 3:
+                                            ?><img src="{{asset('img/MeninadeMascara3.png')}}" style="width: 100%"><?php
+                                        break;
+                                        case 4:
+                                            ?><img src="{{asset('img/MeninoDeMascara.png')}}" style="width: 100%"><?php
+                                        break;
+                                        case 5:
+                                            ?><img src="{{asset('img/MeninoDeMascara2.png')}}" style="width: 100%"><?php
+                                        break;
+
+
+                                    }
+                                ?>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -77,7 +100,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="{{route('forgot')}}">Esqueceu a senha?</a>
                                     </div>
                                 </div>
                             </div>
