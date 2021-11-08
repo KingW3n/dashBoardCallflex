@@ -4,8 +4,7 @@
     Callflex - Esqueceu a senha
 @endsection
 
-@section('content'
-)
+@section('content')
     <div class="row justify-content-center">
         <div class="col-xl-10 col-lg-12 col-md-9">
             <div class="card o-hidden border-0 shadow-lg my-5">
@@ -24,7 +23,8 @@
                                 <form class="forgotUser" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label class="lbUrl" for="">{{ route('enviarCode') }}</label>
+                                        <label class="lbUrl" for="" style="display: none">{{route('enviarCode')}}</label>
+                                        <label class="lbEnterCode" for="" style="display: none">{{route('enterCode')}}</label>
                                         <input type="email" class="form-control form-control-user"
                                             id="exampleInputEmail"  name="email" aria-describedby="emailHelp"
                                             placeholder="E-mail" required>

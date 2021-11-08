@@ -23,7 +23,11 @@ $('.formUser').submit(function(e){
             dataType: 'json',
             cache : false,
             processData: false,
+            beforeSend: function () {
+                $("#boxloadingTela").css({'display':'block'});
+            },
             success:function(response) {
+                $("#boxloadingTela").css({'display':'none'});
                 if(response.login==true){
                     window.location.href=lbUrlHome;
                 }else{

@@ -66,4 +66,10 @@ class controllerRetornoDados extends Controller
         ->join('wp_users','wp_users.user_email','=','wp_plugin_usersadm_login.email')
         ->select('wp_plugin_usersadm_login.*','wp_users.display_name as nome')->first();
     }
+
+    public function VerificarEmailCode(string $email)
+    {
+        return DB::table('wp_plugin_usersadm_login')
+        ->where('email','=',$email)->count();
+    }
 }

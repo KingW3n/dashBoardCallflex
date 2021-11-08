@@ -21,7 +21,8 @@
     <link href="{{asset('Template/css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
-
+@include('Alerts.alerts')
+@include('Loading.index')
 <body class="">
 
     <div class="container">

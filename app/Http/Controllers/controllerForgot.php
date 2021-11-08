@@ -12,17 +12,43 @@ class controllerForgot extends Controller
         return view('forgot.index');
     }
 
-    public function enviarCode(Request $request)
+    public function enviarCode(Request $request,controllerRetornoDados $retornoDados)
     {
-        $data = ['code' => 'baz','email'=>$request->email];
-        $email = $request->email;
-        Mail::send('mail.code',$data, function ($message) use ($email) {
-            $message->from('wendel.junior@callflex.net.br', 'Callflex Dashboard');
-            $message->to($email, 'junior');
-            $message->subject('codigo de verificação');
-        });
+        $dadosUser = $retornoDados->DadosUser($request->email);
+        if($dadosUser != null){
+            //Gera o codigo randomico para verificação do e-mail
+            $Codigo = $this->generateRandomString(6);
+            //Criar o array de objetos para enviar no e-mail
+            $data = ['code' => $Codigo,'nome'=>$dadosUser->nome,'email'=>$request->email];
+            //armazena os dados para envio do email
+            $email = $request->email;
+            Mail::send('mail.code',$data, function ($message) use ($email,$dadosUser) {
+                $message->from('wendel.junior@callflex.net.br', 'Callflex Dashboard');
+                $message->to($email, $dadosUser->nome);
+                $message->subject('codigo de verificação');
+            });
+            $request->session()->put('Codigo',$Codigo);
+            $resposta['email'] = true;
+            $resposta['mensagem'] = "enviado";
 
-      return redirect(route('enterCode'));
+            return json_encode($resposta);
+        }else{
+            $resposta['email'] = false;
+            $resposta['mensagem'] = "E-mail não localizado na base de usuarios do Plugin";
+
+            return json_encode($resposta);
+        }
+
+    }
+
+    public function generateRandomString($length) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     public function enterCode(Request $request)
