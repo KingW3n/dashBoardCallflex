@@ -23,12 +23,17 @@
                                 </div>
                                 <form class="user">
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user"
-                                            id="exampleInputEmail" aria-describedby="emailHelp"
-                                            placeholder="E-mail">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="inputSenha" aria-describedby="passwordHelp"
+                                            placeholder="Senha">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="inputConfirmarSenha" aria-describedby="passwordHelp"
+                                            placeholder="Confirmação de senha">
                                     </div>
                                     <a href="{{route('NewSenha')}}" class="btn btn-primary btn-user btn-block">
-                                        Enviar
+                                        Salvar
                                     </a>
                                 </form>
                                 <hr>

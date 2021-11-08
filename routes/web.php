@@ -19,6 +19,7 @@ Route::post('/', 'App\Http\Controllers\controllerdashBoard@Count5Anos')->name('C
 Route::match(['get', 'post'],'/login', 'App\Http\Controllers\controllerLogin@index')->name('indexLogin');
 Route::post('/login', 'App\Http\Controllers\controllerLogin@realizarLogin')->name('realizarLogin');
 Route::match(['get', 'post'], '/login/deslog','App\Http\Controllers\controllerLogin@Realizarlogout')->name('Realizarlogout');
-Route::match(['get', 'post'], '/forgot','App\Http\Controllers\controllerForgot@index')->name('forgot');
+Route::get('/forgot','App\Http\Controllers\controllerForgot@index')->name('forgot');
+Route::post('/forgot','App\Http\Controllers\controllerForgot@enviarCode')->name('enviarCode');
 Route::match(['get', 'post'], '/forgot/code','App\Http\Controllers\controllerForgot@enterCode')->name('enterCode');
 Route::match(['get', 'post'], '/forgot/code/nova/senha','App\Http\Controllers\controllerForgot@NewSenha')->name('NewSenha');

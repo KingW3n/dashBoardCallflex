@@ -21,15 +21,17 @@
                                     <p class="mb-4">
                                         Nós entendemos, coisas acontecem. Basta inserir seu endereço de e-mail!</p>
                                 </div>
-                                <form class="user">
+                                <form class="forgotUser" method="POST">
+                                    @csrf
                                     <div class="form-group">
+                                        <label class="lbUrl" for="">{{ route('enviarCode') }}</label>
                                         <input type="email" class="form-control form-control-user"
-                                            id="exampleInputEmail" aria-describedby="emailHelp"
-                                            placeholder="E-mail">
+                                            id="exampleInputEmail"  name="email" aria-describedby="emailHelp"
+                                            placeholder="E-mail" required>
                                     </div>
-                                    <a href="{{route('enterCode')}}" class="btn btn-primary btn-user btn-block">
+                                    <button class="btn btn-primary btn-user btn-block">
                                         Enviar
-                                    </a>
+                                    </button>
                                 </form>
                                 <hr>
                                 <div class="text-center">
@@ -42,5 +44,10 @@
             </div>
         </div>
     </div>
+       <!-- Bootstrap core JavaScript-->
+       <script src="{{asset('Template/vendor/jquery/jquery.min.js')}}"></script>
+       <script src="{{asset('Template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+       <script src="{{asset('js/forgot.js')}}"> </script>
 
 @endsection

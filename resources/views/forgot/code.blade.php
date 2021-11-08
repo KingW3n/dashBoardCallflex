@@ -23,13 +23,14 @@
                                 </div>
                                 <form class="user">
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user"
-                                            id="exampleInputEmail" aria-describedby="emailHelp"
-                                            placeholder="E-mail">
+                                        <input type="text" class="form-control form-control-user"
+                                            id="inputCode" aria-describedby="pinCode"
+                                            placeholder="Codigo de verificação">
+
                                     </div>
-                                    <a href="{{route('NewSenha')}}" class="btn btn-primary btn-user btn-block">
+                                    <button class="btn btn-primary btn-user btn-block">
                                         Enviar
-                                    </a>
+                                    </button>
                                 </form>
                                 <hr>
                                 <div class="text-center">
