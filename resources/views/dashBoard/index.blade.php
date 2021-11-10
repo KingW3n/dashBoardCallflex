@@ -268,7 +268,7 @@ SB Admin 2 - Dashboard
     </div>
 </div>
 <!-- Page level plugins -->
-<script src="{{asset('srcTemplate/vendor/chart.js/Chart.min.js')}}"></script>
+<script src="{{asset('Template/vendor/chart.js/Chart.min.js')}}"></script>
 <script src="{{asset('js/chart.js')}}"></script>
 <script src="{{asset('js/area.js')}}"></script>
 <script src="{{asset('js/dashboard.js')}}"></script>

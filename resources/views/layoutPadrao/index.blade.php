@@ -11,9 +11,9 @@
 
     <title>@yield('Titulo')</title>
 
-    <link href="{{ asset('srcTemplate/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('Template/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="{{asset('srcTemplate/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('Template/css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -24,7 +24,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="mx-3">Callflex </div>
             </a>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
@@ -62,13 +62,18 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$nomeUser->nome}}</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$DadosUser->nome}}</span>
+                                @if ($DadosUser->photo)
+
+                                @else
+                                    <img class="img-profile rounded-circle" src="{{ asset('Template/img/undraw_profile.svg')}}">
+                                @endif
+
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Profile
+                                        Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -77,7 +82,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Sair
                                 </a>
                             </div>
                         </li>
@@ -105,31 +110,29 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Realizar Logout?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Deseja realmente realizar o Logout?</div>
+                <div class="modal-body">Deseja realmente sair?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="{{route('Realizarlogout')}}">Sair</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('srcTemplate/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('srcTemplate/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('Template/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('Template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{asset('srcTemplate/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="{{asset('Template/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{asset('srcTemplate/js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Page level custom scripts -->
+    <script src="{{asset('Template/js/sb-admin-2.min.js')}}"></script>
 
 </body>
 
