@@ -22,4 +22,6 @@ Route::match(['get', 'post'], '/login/deslog','App\Http\Controllers\controllerLo
 Route::get('/forgot','App\Http\Controllers\controllerForgot@index')->name('forgot');
 Route::post('/forgot','App\Http\Controllers\controllerForgot@enviarCode')->name('enviarCode');
 Route::get('/forgot/code','App\Http\Controllers\controllerForgot@enterCode')->name('enterCode');
-//Route::match(['get', 'post'], '/forgot/code/nova/senha','App\Http\Controllers\controllerForgot@NewSenha')->name('NewSenha');
+Route::post('/forgot/code','App\Http\Controllers\controllerForgot@verificarCode')->name('verificarCode');
+Route::get('/forgot/code/nova/senha','App\Http\Controllers\controllerForgot@NewSenha')->name('NewSenha');
+Route::post('/forgot/code/nova/senha','App\Http\Controllers\controllerForgot@cadastrarNewSenha')->name('cadastrarNewSenha');

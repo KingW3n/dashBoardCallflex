@@ -20,11 +20,14 @@
                                     <p class="mb-4">
                                         Nós enviamos o codigo de verificação para o E-mail informado. </p>
                                 </div>
-                                <form class="FormVerificarCodigo">
+                                <form class="FormVerificarCodigo" method="POST">
+                                    @csrf
+                                    <input type="hidden" class="lbUrl" name="" value="{{route('verificarCode')}}">
+                                    <input type="hidden" class="lbEnterCode" name="" value="{{route('NewSenha')}}">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user"
                                             id="inputCode" aria-describedby="pinCode"
-                                            placeholder="Codigo de verificação">
+                                            placeholder="Codigo de verificação" name="codigo">
 
                                     </div>
                                     <button class="btn btn-primary btn-user btn-block">
@@ -42,5 +45,10 @@
             </div>
         </div>
     </div>
+     <!-- Bootstrap core JavaScript-->
+     <script src="{{asset('Template/vendor/jquery/jquery.min.js')}}"></script>
+     <script src="{{asset('Template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+     <script src="{{asset('js/forgot.js')}}"> </script>
 
 @endsection
