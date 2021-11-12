@@ -27,7 +27,13 @@ class controllerdashBoard extends Controller
 
             //puxa o total de acessos em timeLine
             $timelineAcessos = $retornoDados->AcesosTimeLine($dataHojeMUm, $dataSemana, $dataMes,Date("Y") );
-
+            $request->session()->put('categoria','0');
+            $request->session()->put('filtroTempo','AL');
+            $request->session()->put('filtroMes','');
+            $request->session()->put('filtroMesAno','');
+            $request->session()->put('filtroAno','');
+            $request->session()->put('filtrodataInicioBusca','');
+            $request->session()->put('filtrodataFimBusca','');
             return view('dashBoard.index')
             ->with('DadosUser', $retornoDados->DadosUser($request->session()->get('email')))
             ->with('user', $retornoDados->UserCount())
@@ -43,6 +49,7 @@ class controllerdashBoard extends Controller
             ->with('acessosPrimeiroSemestre', $timelineAcessos[2])
             ->with('acessosSegndoSemestre', $timelineAcessos[3])
             ->with('acessosAno', $timelineAcessos[4])
+            ->with('dadosCategoria', $retornoDados->DadosCategoria())
             ->with('AnosDosAcessos', $this->Count5_Value());
 
         }else{

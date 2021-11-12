@@ -16,7 +16,8 @@
     <link href="{{asset('Template/css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
-
+@include('Alerts.alerts')
+@include('Loading.index')
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
