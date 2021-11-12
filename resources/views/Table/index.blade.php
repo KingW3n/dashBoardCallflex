@@ -12,7 +12,8 @@ Callflex Youniversity - Dashboard
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">{{$tipo}}</h6>
+            <h6 class="m-0 font-weight-bold text-primary textTipo">{{$tipo}}</h6>
+            <div class="btnExport btn-group"></div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -24,28 +25,31 @@ Callflex Youniversity - Dashboard
                             @endforeach
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            @foreach ($Title as $val )
-                            <th>{{$val}}</th>
-                            @endforeach
-                        </tr>
-                    </tfoot>
                     <tbody>
                         <?php $contador =0;?>
                         @if ($tipo == "Usuarios Cadastrados")
                             @foreach ($coteudoTable as  $value)
-                            <?php $contador++;?>
-                            <tr>
-                                <td>{{$contador}}</td>
-                                <td>{{$value->display_name}}</td>
-                                <td>{{$value->user_nicename}}</td>
-                                <td>{{$value->user_email}}</td>
-                                <td>{{$value->user_registered}}</td>
-                            </tr>
+                                <?php $contador++;?>
+                                <tr>
+                                    <td>{{$contador}}</td>
+                                    <td>{{$value->display_name}}</td>
+                                    <td>{{$value->user_nicename}}</td>
+                                    <td>{{$value->user_email}}</td>
+                                    <td>{{$value->user_registered}}</td>
+                                </tr>
                             @endforeach
-                        @else
-
+                        @elseif($tipo == "Inscrições em curso")
+                            @foreach ($coteudoTable as  $value)
+                                <?php $contador++;?>
+                                <tr>
+                                    <td>{{$contador}}</td>
+                                    <td>{{$value->display_name}}</td>
+                                    <td>{{$value->user_nicename}}</td>
+                                    <td>{{$value->user_email}}</td>
+                                    <td>{{$value->course}}</td>
+                                    <td>{{$value->date_recorded}}</td>
+                                </tr>
+                            @endforeach
                         @endif
 
                     </tbody>
@@ -68,14 +72,49 @@ Callflex Youniversity - Dashboard
   <!-- Page level plugins -->
   <script src="{{asset('Template/vendor/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('Template/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+
+
+
 <script>
-    $('#dataTable').DataTable({
-        dom: 'Bfrtip',
+
+    var table = $('#dataTable').DataTable({
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
         ]
     });
-</script>
+    new $.fn.dataTable.Buttons( table, {
+        buttons: [
+                    { extend: 'csv' , text: 'csv',className:'btn btn-info '},
+                    { extend: 'excel' , text: 'excel',className:'btn btn-info '},
+                    { extend: 'pdf' , text: 'pdf',className:'btn btn-info '},
+                    { extend: 'print' , text: 'Imprimir',className:'btn btn-info '}
+                ]
+    } );
 
+    table.buttons( 1, null ).container().appendTo(
+        $('.btnExport')
+    );
+</script>
+<style>
+.btnExport{
+    float: right;
+}
+.textTipo{
+    float: left;
+}
+</style>
 
 @endsection

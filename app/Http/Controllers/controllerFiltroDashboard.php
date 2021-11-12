@@ -13,8 +13,8 @@ class controllerFiltroDashboard extends Controller
         $request->session()->put('filtroMes',$request->SelectFiltroMes);
         $request->session()->put('filtroMesAno',$request->SelectFiltroMesAno);
         $request->session()->put('filtroAno',$request->SelectFiltroAno);
-        $request->session()->put('filtrodataInicioBusca',$request->dataInicioBusca);
-        $request->session()->put('filtrodataFimBusca',$request->dataFimBusca);
+        $request->session()->put('filtrodataInicioBusca',date("Y-m-d", strtotime('-0 days', strtotime(implode('-', array_reverse(explode('/', $request->dataInicioBusca)))))));
+        $request->session()->put('filtrodataFimBusca',date('Y-m-d', strtotime('+1 days', strtotime(implode('-', array_reverse(explode('/', $request->dataFimBusca)))))));
         switch ($request->SelectFiltrotempo) {
             case 'AL':
                 return json_encode($retorno->AllCont($request->SelectFiltroEmpresa));
@@ -28,7 +28,7 @@ class controllerFiltroDashboard extends Controller
                 return json_encode($retorno->BetweenCont($request->SelectFiltroEmpresa,$data,$data2));
             break;
             case 'PM':
-                $data = $request->SelectFiltroAno."-".$request->SelectFiltroMes;
+                $data = "".$request->SelectFiltroMesAno."-".$request->SelectFiltroMes;
                 return json_encode($retorno->LikeDateCont($request->SelectFiltroEmpresa,$data));
             break;
             case 'PA':
