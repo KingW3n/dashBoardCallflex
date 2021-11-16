@@ -4,6 +4,7 @@ function instanciarChart(idCampo,lbCampOne,lbCampTwo,valorOne,valorTwo,colorOne,
     Chart.defaults.global.defaultFontColor = '#858796';
 
     // Pie Chart Example
+    $('.Chart'+idCampo).html('<canvas id="'+idCampo+'"></canvas>');
     var ctx = document.getElementById(idCampo);
     var myPieChart = new Chart(ctx, {
         type: 'doughnut',
@@ -34,4 +35,5 @@ function instanciarChart(idCampo,lbCampOne,lbCampTwo,valorOne,valorTwo,colorOne,
             cutoutPercentage: 80,
         },
     });
+    $(idCampo).html('oi');
 }

@@ -32,6 +32,7 @@ $('.formUser').submit(function(e){
                     window.location.href=lbUrlHome;
                 }else{
                     alertDanger(response.mensagem);
+                    grecaptcha.reset();
                 }
             }
 
