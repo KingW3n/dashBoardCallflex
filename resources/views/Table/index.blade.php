@@ -35,10 +35,10 @@ Callflex Youniversity - Dashboard
                                     <td>{{$value->display_name}}</td>
                                     <td>{{$value->user_nicename}}</td>
                                     <td>{{$value->user_email}}</td>
-                                    <td>{{$value->user_registered}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($value->user_registered)->format('d/m/Y H:i:s')}}</td>
                                 </tr>
                             @endforeach
-                        @elseif($tipo == "Inscrições em curso")
+                        @elseif($tipo == "Inscrições em curso" || $tipo == "Certificados Emitidos")
                             @foreach ($coteudoTable as  $value)
                                 <?php $contador++;?>
                                 <tr>
@@ -47,7 +47,28 @@ Callflex Youniversity - Dashboard
                                     <td>{{$value->user_nicename}}</td>
                                     <td>{{$value->user_email}}</td>
                                     <td>{{$value->course}}</td>
-                                    <td>{{$value->date_recorded}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($value->date_recorded)->format('d/m/Y H:i:s')}}</td>
+                                </tr>
+                            @endforeach
+                        @elseif($tipo == "Cursos Publicados")
+                            @foreach ($coteudoTable as  $value)
+                                <?php $contador++;?>
+                                <tr>
+                                    <td>{{$contador}}</td>
+                                    <td>{{$value->id_course}}</td>
+                                    <td>{{$value->course}}</td>
+                                    <td>{{$value->duracao}}</td>
+                                </tr>
+                            @endforeach
+                        @elseif($tipo == "Acessos" || $tipo =="Acessos Hoje")
+                            @foreach ($coteudoTable as  $value)
+                                <?php $contador++;?>
+                                <tr>
+                                    <td>{{$contador}}</td>
+                                    <td>{{$value->display_name}}</td>
+                                    <td>{{$value->user_nicename}}</td>
+                                    <td>{{$value->user_email}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($value->DataHora)->format('d/m/Y H:i:s')}}</td>
                                 </tr>
                             @endforeach
                         @endif

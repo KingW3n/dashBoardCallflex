@@ -116,12 +116,15 @@ Callflex Youniversity - Dashboard
                             </center>
 
                         </div>
-                        <a target="_blank" href="{{route('RelatorioTable','viewUsuarioCadastrados')}}"><i class="far fa-eye iconView viewUsuarioCadastrados" name="viewUsuarioCadastrados"></i></a>
+                        <div>
+                            <a href=""><i class="far fa-eye iconView viewUsuarioCadastrados" name="viewUsuarioCadastrados"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewUsuarioCadastrados')}}"><i class="fas fa-reply iconView viewUsuarioCadastrados mt-3" style="transform: scaleX(-1);" name="viewUsuarioCadastrados"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Earnings (Monthly) Card Example -->
+        <!-- Total de Inscrições em Cursos -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divIncricoesurso">
             <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-body">
@@ -135,12 +138,15 @@ Callflex Youniversity - Dashboard
                                 </div>
                             </center>
                         </div>
-                        <a target="_blank" href="{{route('RelatorioTable','viewInscricoesEmCurso')}}"><i class="far fa-eye iconView viewInscricoesEmCurso" name="viewInscricoesEmCurso"></i></a>
+                        <div>
+                            <a href=""><i class="far fa-eye iconView viewInscricoesEmCurso" name="viewInscricoesEmCurso"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewInscricoesEmCurso')}}"><i class="fas fa-reply iconView viewInscricoesEmCurso mt-3" style="transform: scaleX(-1);" name="viewInscricoesEmCurso"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Earnings (Monthly) Card Example -->
+        <!-- Total de certificados Emitidos -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divCertificadosEmitidos">
             <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-body">
@@ -155,12 +161,15 @@ Callflex Youniversity - Dashboard
                                 </div>
                             </center>
                         </div>
-                        <a target="_blank" href="{{route('RelatorioTable','viewCertificadosEmitidos')}}"><i class="far fa-eye iconView viewCertificadosEmitidos" name="viewCertificadosEmitidos" ></i></a>
+                        <div>
+                            <a  href=""><i class="far fa-eye iconView viewCertificadosEmitidos" name="viewCertificadosEmitidos" ></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewCertificadosEmitidos')}}"><i class="fas fa-reply iconView viewCertificadosEmitidos mt-3" style="transform: scaleX(-1);" name="viewCertificadosEmitidos" ></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Earnings (Monthly) Card Example -->
+        <!-- Cursos Publicados (Ativo) -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divCursosPublicados">
             <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-body">
@@ -175,12 +184,15 @@ Callflex Youniversity - Dashboard
                                 </div>
                             </center>
                         </div>
-                        <a target="_blank" href="{{route('RelatorioTable','viewCursospublicados')}}"><i class="far fa-eye iconView viewCursospublicados" name="viewCursospublicados"></i></a>
+                        <div>
+                            <a href=""><i class="far fa-eye iconView viewCursospublicados" name="viewCursospublicados"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewCursospublicados')}}"><i class="fas fa-reply iconView viewCursospublicados mt-3" style="transform: scaleX(-1);" name="viewCursospublicados"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Earnings (Monthly) Card Example -->
+        <!-- Acessos -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divAcessos">
             <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-body">
@@ -195,12 +207,15 @@ Callflex Youniversity - Dashboard
                                 </div>
                             </center>
                         </div>
-                        <a target="_blank" href="{{route('RelatorioTable','viewAcessoTotal')}}"><i class="far fa-eye iconView viewAcessoTotal"  name="viewAcessoTotal"></i></a>
+                        <div>
+                            <a href=""><i class="far fa-eye iconView viewAcessoTotal"  name="viewAcessoTotal"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewAcessoTotal')}}"><i class="fas fa-reply iconView viewAcessoTotal mt-3" style="transform: scaleX(-1);"  name="viewAcessoTotal"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Pending Requests Card Example -->
+        <!-- Acessos Hoje -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divAcessosHoje">
             <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-body">
@@ -214,7 +229,10 @@ Callflex Youniversity - Dashboard
                                 </div>
                             </center>
                         </div>
-                        <a target="_blank" href="{{route('RelatorioTable','viewAcessoHoje')}}"><i class="far fa-eye iconView viewAcessoHoje " name="viewAcessoHoje"></i></a>
+                        <div>
+                            <a href=""><i class="far fa-eye iconView viewAcessoHoje " name="viewAcessoHoje"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewAcessoHoje')}}"><i class="fas fa-reply iconView viewAcessoHoje mt-3" style="transform: scaleX(-1);" name="viewAcessoHoje"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -246,7 +264,7 @@ Callflex Youniversity - Dashboard
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
+                    <div class="chart-pie pt-4 pb-2 ChartPieChartCursos">
                         <canvas id="PieChartCursos"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
@@ -284,7 +302,7 @@ Callflex Youniversity - Dashboard
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
+                    <div class="chart-pie pt-4 pb-2 ChartPieChartCursosPublicados">
                         <canvas id="PieChartCursosPublicados"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
@@ -367,6 +385,8 @@ Callflex Youniversity - Dashboard
 <script src="{{asset('js/area.js')}}"></script>
 <script src="{{asset('js/dashboard.js')}}"></script>
 <script>
+    var largura = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    console.log(largura);
     var dadosAcessos=[ {{$acessoHoje}} , {{$acessosSemana}} , {{$acessosMes}} , {{$acessosPrimeiroSemestre}} , {{$acessosSegndoSemestre}} ,{{$acessosAno}}];
     let arrayAnos = [ {{$AnosDosAcessos[0]['Ano']}} ,  {{$AnosDosAcessos[1]['Ano']}}, {{$AnosDosAcessos[2]['Ano']}}, {{$AnosDosAcessos[3]['Ano']}},{{$AnosDosAcessos[4]['Ano']}}];
     let arrayAcessos = [ {{$AnosDosAcessos[0]['Acessos']}} ,  {{$AnosDosAcessos[1]['Acessos']}}, {{$AnosDosAcessos[2]['Acessos']}}, {{$AnosDosAcessos[3]['Acessos']}},{{$AnosDosAcessos[4]['Acessos']}}]
