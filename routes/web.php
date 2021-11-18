@@ -26,3 +26,4 @@ Route::get('/forgot/code/nova/senha','App\Http\Controllers\controllerForgot@NewS
 Route::post('/forgot/code/nova/senha','App\Http\Controllers\controllerForgot@cadastrarNewSenha')->name('cadastrarNewSenha');
 Route::post('/filtro','App\Http\Controllers\controllerFiltroDashboard@index')->name('FiltroDashboard');
 Route::get('/relatorio/{view}','App\Http\Controllers\controllerRelatorioTable@index')->name('RelatorioTable');
+Route::post('/table/{view}','App\Http\Controllers\controllerRelatorioTable@retornaTable')->name('retornaTable');

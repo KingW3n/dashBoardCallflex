@@ -5,6 +5,7 @@ Callflex Youniversity - Dashboard
 
 
 @section('Content')
+<link href="{{asset('Template/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -117,13 +118,27 @@ Callflex Youniversity - Dashboard
 
                         </div>
                         <div>
-                            <a href=""><i class="far fa-eye iconView viewUsuarioCadastrados" name="viewUsuarioCadastrados"></i></a>
-                            <a target="_blank" href="{{route('RelatorioTable','viewUsuarioCadastrados')}}"><i class="fas fa-reply iconView viewUsuarioCadastrados mt-3" style="transform: scaleX(-1);" name="viewUsuarioCadastrados"></i></a>
+                            <a href=""><i class="far fa-eye iconView viewUsuarioCadastrados viewTable" name="viewUsuarioCadastrados"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewUsuarioCadastrados')}}"><i class="fas fa-reply iconView viewUsuarioCadastrados mt-3 iconView" style="transform: scaleX(-1);" name="viewUsuarioCadastrados"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_one" style="display: none;">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_oneT" style="float: right;"></h6>
+                <div class="btnExport btn-group"></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="BoxTable_oneC" class="col-xl-12 mb-4 CardDashboard" cellspacing="0" ></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="BoxTable_one"></div>
         <!-- Total de Inscrições em Cursos -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divIncricoesurso">
             <div class="card border-left-secondary shadow h-100 py-2">
@@ -139,13 +154,26 @@ Callflex Youniversity - Dashboard
                             </center>
                         </div>
                         <div>
-                            <a href=""><i class="far fa-eye iconView viewInscricoesEmCurso" name="viewInscricoesEmCurso"></i></a>
-                            <a target="_blank" href="{{route('RelatorioTable','viewInscricoesEmCurso')}}"><i class="fas fa-reply iconView viewInscricoesEmCurso mt-3" style="transform: scaleX(-1);" name="viewInscricoesEmCurso"></i></a>
+                            <a href=""><i class="far fa-eye iconView viewInscricoesEmCurso viewTable" name="viewInscricoesEmCurso"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewInscricoesEmCurso')}}"><i class="fas fa-reply viewInscricoesEmCurso mt-3 iconView" style="transform: scaleX(-1);" name="viewInscricoesEmCurso"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_two" style="display: none;">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_twoT"></h6>
+                <div class="btnExport btn-group"></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="BoxTable_twoC" class="col-xl-12 mb-4 CardDashboard" cellspacing="0" ></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Total de certificados Emitidos -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divCertificadosEmitidos">
             <div class="card border-left-secondary shadow h-100 py-2">
@@ -162,13 +190,26 @@ Callflex Youniversity - Dashboard
                             </center>
                         </div>
                         <div>
-                            <a  href=""><i class="far fa-eye iconView viewCertificadosEmitidos" name="viewCertificadosEmitidos" ></i></a>
-                            <a target="_blank" href="{{route('RelatorioTable','viewCertificadosEmitidos')}}"><i class="fas fa-reply iconView viewCertificadosEmitidos mt-3" style="transform: scaleX(-1);" name="viewCertificadosEmitidos" ></i></a>
+                            <a  href=""><i class="far fa-eye iconView viewCertificadosEmitidos viewTable" name="viewCertificadosEmitidos" ></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewCertificadosEmitidos')}}"><i class="fas fa-reply viewCertificadosEmitidos mt-3 iconView" style="transform: scaleX(-1);" name="viewCertificadosEmitidos" ></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_three" style="display: none;">
+            <div class="card-header py-3" style="height: 70px;">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_threeT" style=" float: left;"></h6>
+                <div class="btnExport btn-group" style=" float: right;"></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="BoxTable_threeC" class="col-xl-12 mb-4 CardDashboard" cellspacing="0" ></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Cursos Publicados (Ativo) -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divCursosPublicados">
             <div class="card border-left-secondary shadow h-100 py-2">
@@ -185,13 +226,26 @@ Callflex Youniversity - Dashboard
                             </center>
                         </div>
                         <div>
-                            <a href=""><i class="far fa-eye iconView viewCursospublicados" name="viewCursospublicados"></i></a>
-                            <a target="_blank" href="{{route('RelatorioTable','viewCursospublicados')}}"><i class="fas fa-reply iconView viewCursospublicados mt-3" style="transform: scaleX(-1);" name="viewCursospublicados"></i></a>
+                            <a href=""><i class="far fa-eye iconView viewCursospublicados viewTable" name="viewCursospublicados"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewCursospublicados')}}"><i class="fas fa-reply viewCursospublicados mt-3 iconView" style="transform: scaleX(-1);" name="viewCursospublicados"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_four" style="display: none;">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_fourT"></h6>
+                <div class="btnExport btn-group"></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="BoxTable_fourC" class="col-xl-12 mb-4 CardDashboard" cellspacing="0" ></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Acessos -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divAcessos">
             <div class="card border-left-secondary shadow h-100 py-2">
@@ -208,13 +262,26 @@ Callflex Youniversity - Dashboard
                             </center>
                         </div>
                         <div>
-                            <a href=""><i class="far fa-eye iconView viewAcessoTotal"  name="viewAcessoTotal"></i></a>
-                            <a target="_blank" href="{{route('RelatorioTable','viewAcessoTotal')}}"><i class="fas fa-reply iconView viewAcessoTotal mt-3" style="transform: scaleX(-1);"  name="viewAcessoTotal"></i></a>
+                            <a href=""><i class="far fa-eye iconView viewAcessoTotal viewTable"  name="viewAcessoTotal"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewAcessoTotal')}}"><i class="fas fa-reply viewAcessoTotal mt-3 iconView" style="transform: scaleX(-1);"  name="viewAcessoTotal"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_five" style="display: none;">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_fiveT"></h6>
+                <div class="btnExport btn-group"></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="BoxTable_fiveC" class="col-xl-12 mb-4 CardDashboard" cellspacing="0" ></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Acessos Hoje -->
         <div class="col-xl-4 col-md-6 mb-4 CardDashboard" id="divAcessosHoje">
             <div class="card border-left-secondary shadow h-100 py-2">
@@ -230,14 +297,28 @@ Callflex Youniversity - Dashboard
                             </center>
                         </div>
                         <div>
-                            <a href=""><i class="far fa-eye iconView viewAcessoHoje " name="viewAcessoHoje"></i></a>
-                            <a target="_blank" href="{{route('RelatorioTable','viewAcessoHoje')}}"><i class="fas fa-reply iconView viewAcessoHoje mt-3" style="transform: scaleX(-1);" name="viewAcessoHoje"></i></a>
+                            <a href=""><i class="far fa-eye iconView viewAcessoHoje viewTable" name="viewAcessoHoje"></i></a>
+                            <a target="_blank" href="{{route('RelatorioTable','viewAcessoHoje')}}"><i class="fas fa-reply viewAcessoHoje mt-3 iconView" style="transform: scaleX(-1);" name="viewAcessoHoje"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_six" style="display: none;">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_sixT"></h6>
+            <div class="btnExport btn-group"></div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="BoxTable_sixC" class="col-xl-12 mb-4 CardDashboard" cellspacing="0" ></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="BoxTable_six"></div>
     <!-- Content Row -->
     <div class="row">
         <!-- Pie Chart -->
@@ -378,11 +459,41 @@ Callflex Youniversity - Dashboard
         </div>
     </div>
 </div>
+
+
 <!-- Page level plugins -->
 <script src="{{asset('Template/vendor/jquery/jquery.min.js')}}"></script>
+
+
+ <!-- Bootstrap core JavaScript-->
+ <script src="{{asset('Template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+ <!-- Core plugin JavaScript-->
+ <script src="{{asset('Template/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+
+ <!-- Page level plugins -->
+ <script src="{{asset('Template/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+ <script src="{{asset('Template/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+
+
+
 <script src="{{asset('Template/vendor/chart.js/Chart.min.js')}}"></script>
 <script src="{{asset('js/chart.js')}}"></script>
 <script src="{{asset('js/area.js')}}"></script>
+
+
+
 <script src="{{asset('js/dashboard.js')}}"></script>
 <script>
     var largura = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -397,5 +508,6 @@ Callflex Youniversity - Dashboard
 .iconView{
     cursor: pointer;
 }
+
 </style>
 @endsection

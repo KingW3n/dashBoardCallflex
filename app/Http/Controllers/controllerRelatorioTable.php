@@ -15,33 +15,7 @@ class controllerRelatorioTable extends Controller
         $retornoTd = "";
         switch ($request->view) {
             case 'viewUsuarioCadastrados':
-                $retornoTd = DB::table('wp_users as u')
-                ->when($request->session()->get('categoria') !=0 , function ($query) use ($request){
-                    $query->join('wp_plugin_tbaux_user_catetoria as z','u.ID','=','z.ID_user')->join('wp_plugin_tbaux_user_catetoria as z','z.ID_categoria', '=' ,$request->session()->get('categoria'));
-
-                })->when($request->session()->get('filtroTempo') == 'RH',function ($query) use ($request){
-                    $data = Date("Y-m-d");
-                    $query->where('u.user_registered','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'US',function ($query) use ($request){
-                    $data = date("Y-m-d", strtotime('-8 days', strtotime(date("Y-m-d"))));
-                    $data2 = date('Y-m-d', strtotime('+1 days', strtotime(date("Y-m-d"))));
-                    $query->whereBetween('u.user_registered',array($data,$data2));
-
-                })->when($request->session()->get('filtroTempo') == 'PM',function ($query) use ($request){
-                    $data =$request->session()->get('filtroMesAno').'-'.$request->session()->get('filtroMes');
-                    $query->where('u.user_registered','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'PA',function ($query) use ($request){
-                    $data =$request->session()->get('filtroAno');
-                    $query->where('u.user_registered','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'PL',function ($query) use ($request){
-                    $data = $request->session()->get('filtrodataInicioBusca');
-                    $data2 = $request->session()->get('filtrodataFimBusca');
-                    $query->whereBetween('u.user_registered',array($data,$data2));
-
-                })->select('u.display_name','u.user_nicename', 'u.user_email','u.user_registered')->get();
+                $retornoTd = $this->viewUsuarioCadastrados($request);
                 $tituloTable = ['','Nome','UserName','E-mail','Data do cadastro'];
                 $tipo="Usuarios Cadastrados";
             break;
@@ -56,71 +30,18 @@ class controllerRelatorioTable extends Controller
                 $tipo="Certificados Emitidos";
             break;
             case 'viewCursospublicados':
-                $retornoTd = DB::table('wp_dashboard_course')->where('Status','=','Ativo')
-                ->when($request->session()->get('filtroTempo') == 'RH',function ($query) use ($request){
-                    $data = Date("Y-m-d");
-                    $query->where('data_Create','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'US',function ($query) use ($request){
-                    $data = date("Y-m-d", strtotime('-8 days', strtotime(date("Y-m-d"))));
-                    $data2 = date('Y-m-d', strtotime('+1 days', strtotime(date("Y-m-d"))));
-                    $query->whereBetween('data_Create',array($data,$data2));
-
-                })->when($request->session()->get('filtroTempo') == 'PM',function ($query) use ($request){
-                    $data =$request->session()->get('filtroMesAno').'-'.$request->session()->get('filtroMes');
-                    $query->where('data_Create','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'PA',function ($query) use ($request){
-                    $data =$request->session()->get('filtroAno');
-                    $query->where('data_Create','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'PL',function ($query) use ($request){
-                    $data = $request->session()->get('filtrodataInicioBusca');
-                    $data2 = $request->session()->get('filtrodataFimBusca');
-                    $query->whereBetween('data_Create',array($data,$data2));
-
-                })->select('id_course','course', 'duracao')->get();
+                $retornoTd = $this->viewCursospublicados($request);
                 $tituloTable = ['','Cod do Curso','Nome do Curso','Duração do Curso'];
                 $tipo="Cursos Publicados";
             break;
             case 'viewAcessoTotal':
-                $retornoTd = DB::table('wp_plugin_log_user as l')->leftJoin('wp_users as u','l.ID_user','=','u.ID' )
-                ->when($request->session()->get('categoria') !=0 , function ($query) use ($request){
-                    $query->join('wp_plugin_tbaux_user_catetoria as z','l.ID_user','=','z.ID_user')->join('wp_plugin_tbaux_user_catetoria as z','z.ID_categoria', '=' ,$request->session()->get('categoria'));
-
-                })->when($request->session()->get('filtroTempo') == 'RH',function ($query) use ($request){
-                    $data = Date("Y-m-d");
-                    $query->where('DataHora','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'US',function ($query) use ($request){
-                    $data = date("Y-m-d", strtotime('-8 days', strtotime(date("Y-m-d"))));
-                    $data2 = date('Y-m-d', strtotime('+1 days', strtotime(date("Y-m-d"))));
-                    $query->whereBetween('DataHora',array($data,$data2));
-
-                })->when($request->session()->get('filtroTempo') == 'PM',function ($query) use ($request){
-                    $data =$request->session()->get('filtroMesAno').'-'.$request->session()->get('filtroMes');
-                    $query->where('DataHora','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'PA',function ($query) use ($request){
-                    $data =$request->session()->get('filtroAno');
-                    $query->where('DataHora','LIKE','%'.$data.'%');
-
-                })->when($request->session()->get('filtroTempo') == 'PL',function ($query) use ($request){
-                    $data = $request->session()->get('filtrodataInicioBusca');
-                    $data2 = $request->session()->get('filtrodataFimBusca');
-                    $query->whereBetween('DataHora',array($data,$data2));
-
-                })->select('u.display_name','u.user_nicename', 'u.user_email','l.DataHora')->get();
+                $retornoTd = $this->viewAcessoTotal($request);
                 $tituloTable = ['','Nome','UserName','E-mail','Data/Hora do Acesso '];
                 $tipo="Acessos";
             break;
             case 'viewAcessoHoje':
                 $data = Date("Y-m-d");
-                $retornoTd = DB::table('wp_plugin_log_user as l')->where('DataHora','LIKE','%'.$data.'%')->leftJoin('wp_users as u','l.ID_user','=','u.ID' )
-                ->when($request->session()->get('categoria') !=0 , function ($query) use ($request){
-                    $query->join('wp_plugin_tbaux_user_catetoria as z','l.ID_user','=','z.ID_user')->join('wp_plugin_tbaux_user_catetoria as z','z.ID_categoria', '=' ,$request->session()->get('categoria'));
-                })->select('u.display_name','u.user_nicename', 'u.user_email','l.DataHora')->get();
-
+                $retornoTd = $this->viewAcessoHoje($request, $data);
                 $tituloTable = ['','Nome','UserName','E-mail','Data/Hora do Acesso '];
                 $tipo="Acessos Hoje";
             break;
@@ -130,6 +51,62 @@ class controllerRelatorioTable extends Controller
         ->with('coteudoTable',$retornoTd)
         ->with('tipo',$tipo)
         ->with('DadosUser', $retornoDados->DadosUser($request->session()->get('email')));
+    }
+
+    public function retornaTable(Request $request)
+    {
+        switch ($request->view) {
+            case 'viewUsuarioCadastrados':
+                return json_encode($this->viewUsuarioCadastrados($request));
+            break;
+            case 'viewInscricoesEmCurso':
+                return json_encode($this->RetornoTabelaActivity($request,'subscribe_course'));
+            break;
+            case 'viewCertificadosEmitidos':
+                return json_encode($this->RetornoTabelaActivity($request,'student_certificate'));
+            break;
+            case 'viewCursospublicados':
+                return json_encode($this->viewCursospublicados($request));
+            break;
+            case 'viewAcessoTotal':
+                return json_encode($this->viewAcessoTotal($request));
+            break;
+            case 'viewAcessoHoje':
+                $data = Date("Y-m-d");
+                return json_encode($this->viewAcessoHoje($request, $data));
+            break;
+        }
+    }
+
+    public function viewUsuarioCadastrados($request)
+    {
+        return DB::table('wp_users as u')
+        ->when($request->session()->get('categoria') !=0 , function ($query) use ($request){
+            $query->join('wp_plugin_tbaux_user_catetoria as z','u.ID','=','z.ID_user')->join('wp_plugin_tbaux_user_catetoria as z','z.ID_categoria', '=' ,$request->session()->get('categoria'));
+
+        })->when($request->session()->get('filtroTempo') == 'RH',function ($query) use ($request){
+            $data = Date("Y-m-d");
+            $query->where('u.user_registered','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'US',function ($query) use ($request){
+            $data = date("Y-m-d", strtotime('-8 days', strtotime(date("Y-m-d"))));
+            $data2 = date('Y-m-d', strtotime('+1 days', strtotime(date("Y-m-d"))));
+            $query->whereBetween('u.user_registered',array($data,$data2));
+
+        })->when($request->session()->get('filtroTempo') == 'PM',function ($query) use ($request){
+            $data =$request->session()->get('filtroMesAno').'-'.$request->session()->get('filtroMes');
+            $query->where('u.user_registered','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'PA',function ($query) use ($request){
+            $data =$request->session()->get('filtroAno');
+            $query->where('u.user_registered','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'PL',function ($query) use ($request){
+            $data = $request->session()->get('filtrodataInicioBusca');
+            $data2 = $request->session()->get('filtrodataFimBusca');
+            $query->whereBetween('u.user_registered',array($data,$data2));
+
+        })->select('u.display_name','u.user_nicename', 'u.user_email','u.user_registered')->get();
     }
 
     public function RetornoTabelaActivity($request, $tipo)
@@ -161,5 +138,72 @@ class controllerRelatorioTable extends Controller
            $query->whereBetween('a.date_recorded',array($data,$data2));
 
        })->leftJoin('wp_users as b','b.ID','=','a.user_id')->leftJoin('wp_dashboard_course as c','id_course','=','a.item_id')->select('b.display_name','b.user_nicename', 'b.user_email','c.course','a.date_recorded')->get();
+    }
+
+    public function viewCursospublicados($request)
+    {
+        return DB::table('wp_dashboard_course')->where('Status','=','Ativo')
+        ->when($request->session()->get('filtroTempo') == 'RH',function ($query) use ($request){
+            $data = Date("Y-m-d");
+            $query->where('data_Create','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'US',function ($query) use ($request){
+            $data = date("Y-m-d", strtotime('-8 days', strtotime(date("Y-m-d"))));
+            $data2 = date('Y-m-d', strtotime('+1 days', strtotime(date("Y-m-d"))));
+            $query->whereBetween('data_Create',array($data,$data2));
+
+        })->when($request->session()->get('filtroTempo') == 'PM',function ($query) use ($request){
+            $data =$request->session()->get('filtroMesAno').'-'.$request->session()->get('filtroMes');
+            $query->where('data_Create','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'PA',function ($query) use ($request){
+            $data =$request->session()->get('filtroAno');
+            $query->where('data_Create','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'PL',function ($query) use ($request){
+            $data = $request->session()->get('filtrodataInicioBusca');
+            $data2 = $request->session()->get('filtrodataFimBusca');
+            $query->whereBetween('data_Create',array($data,$data2));
+
+        })->select('id_course','course', 'duracao')->get();
+    }
+
+    public function viewAcessoTotal($request)
+    {
+        return DB::table('wp_plugin_log_user as l')->leftJoin('wp_users as u','l.ID_user','=','u.ID' )
+        ->when($request->session()->get('categoria') !=0 , function ($query) use ($request){
+            $query->join('wp_plugin_tbaux_user_catetoria as z','l.ID_user','=','z.ID_user')->join('wp_plugin_tbaux_user_catetoria as z','z.ID_categoria', '=' ,$request->session()->get('categoria'));
+
+        })->when($request->session()->get('filtroTempo') == 'RH',function ($query) use ($request){
+            $data = Date("Y-m-d");
+            $query->where('DataHora','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'US',function ($query) use ($request){
+            $data = date("Y-m-d", strtotime('-8 days', strtotime(date("Y-m-d"))));
+            $data2 = date('Y-m-d', strtotime('+1 days', strtotime(date("Y-m-d"))));
+            $query->whereBetween('DataHora',array($data,$data2));
+
+        })->when($request->session()->get('filtroTempo') == 'PM',function ($query) use ($request){
+            $data =$request->session()->get('filtroMesAno').'-'.$request->session()->get('filtroMes');
+            $query->where('DataHora','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'PA',function ($query) use ($request){
+            $data =$request->session()->get('filtroAno');
+            $query->where('DataHora','LIKE','%'.$data.'%');
+
+        })->when($request->session()->get('filtroTempo') == 'PL',function ($query) use ($request){
+            $data = $request->session()->get('filtrodataInicioBusca');
+            $data2 = $request->session()->get('filtrodataFimBusca');
+            $query->whereBetween('DataHora',array($data,$data2));
+
+        })->select('u.display_name','u.user_nicename', 'u.user_email','l.DataHora')->get();
+    }
+
+    public function viewAcessoHoje($request, $data)
+    {
+        return DB::table('wp_plugin_log_user as l')->where('DataHora','LIKE','%'.$data.'%')->leftJoin('wp_users as u','l.ID_user','=','u.ID' )
+        ->when($request->session()->get('categoria') !=0 , function ($query) use ($request){
+            $query->join('wp_plugin_tbaux_user_catetoria as z','l.ID_user','=','z.ID_user')->join('wp_plugin_tbaux_user_catetoria as z','z.ID_categoria', '=' ,$request->session()->get('categoria'));
+        })->select('u.display_name','u.user_nicename', 'u.user_email','l.DataHora')->get();
     }
 }

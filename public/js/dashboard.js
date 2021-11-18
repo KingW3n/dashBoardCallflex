@@ -1,7 +1,11 @@
+
+
 $(".iconView, .divFiltroPorMes, .divFiltroPorAno, .divFiltroPorPeriodo").css({"display":'none'});
 
 //submitForm
 $('.formFiltroDashboard').submit(function (e) {
+    $("#BoxTable_oneC, #BoxTable_twoC, #BoxTable_threeC, #BoxTable_fourC, #BoxTable_fiveC, #BoxTable_sixC,.btnExport").html('');
+    $("#BoxTable_one, #BoxTable_two, #BoxTable_three, #BoxTable_four, #BoxTable_five, #BoxTable_six").css({'display':"none"});
     e.preventDefault();
     if(verificarFiltro()){
         let lbUrl = $('.FiltroURL').val();
@@ -53,6 +57,121 @@ $('#SelectFiltrotempo').change(function() {
             $("#SelectFiltroMes, #SelectFiltroMesAno, #SelectFiltroAno, #dataInicioBusca, #dataFimBusca").val("");
         break;
     }
+
+})
+
+$('.viewTable').click(function (e) {
+    e.preventDefault();
+
+    var largura = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    let bydiv,bydivT,bydivC;
+    var currentLocation = window.location;
+    let html = '<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"><thead><tr>';
+    $("#BoxTable_oneC, #BoxTable_twoC, #BoxTable_threeC, #BoxTable_fourC, #BoxTable_fiveC, #BoxTable_sixC,.btnExport").html('');
+    $("#BoxTable_one, #BoxTable_two, #BoxTable_three, #BoxTable_four, #BoxTable_five, #BoxTable_six").css({'display':"none"});
+
+    switch ($(this).attr("name")) {
+        case 'viewUsuarioCadastrados':
+            //define a div onde sera exibida a tabela
+            if(largura>1199){
+                bydiv = document.getElementById("BoxTable_three");
+                bydivC = document.getElementById("BoxTable_threeC");
+                bydivT = document.getElementById("BoxTable_threeT");
+            }else if(largura>767){
+                bydiv = document.getElementById("BoxTable_two");
+                bydivC = document.getElementById("BoxTable_twoC");
+                bydivT = document.getElementById("BoxTable_twoT");
+            }else{
+                bydiv = document.getElementById("BoxTable_one");
+                bydivC = document.getElementById("BoxTable_oneC");
+                bydivT = document.getElementById("BoxTable_oneT");
+            }
+            html = html+tableViewUsuariosCadastrados(currentLocation);
+            $(bydivC).html(html);
+            $(bydivT).html('Usuarios Cadastrados');
+            $(bydiv).css({'display':'block'});
+            configurarTable();
+        break;
+        case 'viewInscricoesEmCurso':
+            //define a div onde sera exibida a tabela
+            if(largura>1199){
+                bydiv = document.getElementById("BoxTable_three");
+                bydivC = document.getElementById("BoxTable_threeC");
+                bydivT = document.getElementById("BoxTable_threeT");
+            }else{
+                bydiv = document.getElementById("BoxTable_two");
+                bydivC = document.getElementById("BoxTable_twoC");
+                bydivT = document.getElementById("BoxTable_twoT");
+            }
+            html = html+tableViewInscricoesEmCurso(currentLocation);
+            $(bydivC).html(html);
+            $(bydivT).html('Usuarios Cadastrados');
+            $(bydiv).css({'display':'block'});
+            configurarTable();
+        break;
+        case 'viewCertificadosEmitidos':
+            //define a div onde sera exibida a tabela
+            bydiv = document.getElementById("BoxTable_three");
+            bydivC = document.getElementById("BoxTable_threeC");
+            bydivT = document.getElementById("BoxTable_threeT");
+            html = html+tableViewCertificaosEmCurso(currentLocation);
+            $(bydivC).html(html);
+            $(bydivT).html('Usuarios Cadastrados');
+            $(bydiv).css({'display':'block'});
+            configurarTable();
+        break;
+        case 'viewCursospublicados':
+            //define a div onde sera exibida a tabela
+            if(largura>1199){
+                bydiv = document.getElementById("BoxTable_six");
+                bydivC = document.getElementById("BoxTable_sixC");
+                bydivT = document.getElementById("BoxTable_sixT");
+            }else if(largura>767){
+                bydiv = document.getElementById("BoxTable_five");
+                bydivC = document.getElementById("BoxTable_fiveC");
+                bydivT = document.getElementById("BoxTable_fiveT");
+            }else{
+                bydiv = document.getElementById("BoxTable_four");
+                bydivC = document.getElementById("BoxTable_fourC");
+                bydivT = document.getElementById("BoxTable_fourT");
+            }
+            html = html+tableViewCursosPublicados(currentLocation);
+            $(bydivC).html(html);
+            $(bydivT).html('Usuarios Cadastrados');
+            $(bydiv).css({'display':'block'});
+            configurarTable();
+        break;
+        case 'viewAcessoTotal':
+            //define a div onde sera exibida a tabela
+            if(largura>1199){
+                bydiv = document.getElementById("BoxTable_six");
+                bydivC = document.getElementById("BoxTable_sixC");
+                bydivT = document.getElementById("BoxTable_sixT");
+            }else{
+                bydiv = document.getElementById("BoxTable_five");
+                bydivC = document.getElementById("BoxTable_fiveC");
+                bydivT = document.getElementById("BoxTable_fiveT");
+            }
+            html = html+tableViewAcessoTotal(currentLocation);
+            $(bydivC).html(html);
+            $(bydivT).html('Usuarios Cadastrados');
+            $(bydiv).css({'display':'block'});
+            configurarTable();
+        break;
+        case 'viewAcessoHoje':
+            //define a div onde sera exibida a tabela
+            bydiv = document.getElementById("BoxTable_six");
+            bydivC = document.getElementById("BoxTable_sixC");
+            bydivT = document.getElementById("BoxTable_sixT");
+            html = html+tableViewAcessoHoje(currentLocation);
+            $(bydivC).html(html);
+            $(bydivT).html('Usuarios Cadastrados');
+            $(bydiv).css({'display':'block'});
+            configurarTable();
+        break;
+
+    }
+
 
 })
 
@@ -151,7 +270,309 @@ function alertDanger(mensagem) {
     },4000)
 }
 
+function tableViewUsuariosCadastrados(currentLocation) {
+    let html = '<th></th>'+
+                '<th>Nome</th>'+
+                '<th>UserName</th>'+
+                '<th>E-mail</th>'+
+                '<th>Data do cadastro</th>'+
+            '</tr>'+
+        '</thead>'+
+    '<tbody>';
 
+    $.ajax({
+        url:currentLocation+'table/viewUsuarioCadastrados',
+        type:"post",
+        data:  "_token="+$('meta[name="csrf-token"]').attr('content'),
+        dataType: 'json',
+        cache : false,
+        processData: false,
+        async: false,
+        beforeSend: function() {
+            $("#boxloadingTela").css({'display':'block'});
+        },
+        success:function(response) {
+            let contador =0;
+            $("#boxloadingTela").css({'display':'none'});
+            for (let i = 0; i < response.length; i++) {
+                contador ++;
+                html += '<tr>'+
+                                '<td>'+contador+'</td>'+
+                                '<td>'+response[i].display_name+'</td>'+
+                                '<td>'+response[i].user_nicename+'</td>'+
+                                '<td>'+response[i].user_email+'</td>'+
+                                '<td>'+response[i].user_registered+'</td>'+
+                            '</tr>';
+            }
+            html +='</tbody>'+
+                    '</table>';
+            $('#modalFiltroDashboard').modal('hide');
+        }
+    })
+    return html
+}
+
+function tableViewInscricoesEmCurso(currentLocation) {
+    let html = '<th></th>'+
+                '<th>Nome do Aluno</th>'+
+                '<th>UserName do Aluno</th>'+
+                '<th>E-mail</th>'+
+                '<th>Curso inscrito</th>'+
+                '<th>Data da inscrição</th>'+
+            ' </tr>'+
+        '</thead>'+
+    '<tbody>';
+
+    $.ajax({
+        url:currentLocation+'table/viewInscricoesEmCurso',
+        type:"post",
+        data:  "_token="+$('meta[name="csrf-token"]').attr('content'),
+        dataType: 'json',
+        cache : false,
+        processData: false,
+        async: false,
+        beforeSend: function() {
+            $("#boxloadingTela").css({'display':'block'});
+        },
+        success:function(response) {
+            let contador =0;
+            $("#boxloadingTela").css({'display':'none'});
+            for (let i = 0; i < response.length; i++) {
+                contador ++;
+                let curso ;
+                if(response[i].course == null){
+                    curso = "";
+                }else{
+                    curso = response[i].course;
+                }
+                html= html+ '<tr>'+
+                                '<td>'+contador+'</td>'+
+                                '<td>'+response[i].display_name+'</td>'+
+                                '<td>'+response[i].user_nicename+'</td>'+
+                                '<td>'+response[i].user_email+'</td>'+
+                                '<td>'+curso+'</td>'+
+                                '<td>'+response[i].date_recorded+'</td>'+
+                            '</tr>';
+            }
+
+            html = html+'</tbody>'+
+                    '</table>';
+            $('#modalFiltroDashboard').modal('hide');
+        }
+    })
+    return html;
+}
+
+function tableViewCertificaosEmCurso(currentLocation) {
+    let html = '<th></th>'+
+                    '<th>Nome do Aluno</th>'+
+                    '<th>UserName do Aluno</th>'+
+                    '<th>E-mail</th>'+
+                    '<th>Curso inscrito</th>'+
+                    '<th>Data da inscrição</th>'+
+                ' </tr>'+
+            '</thead>'+
+        '<tbody>';
+
+    $.ajax({
+        url:currentLocation+'table/viewCertificadosEmitidos',
+        type:"post",
+        data:  "_token="+$('meta[name="csrf-token"]').attr('content'),
+        dataType: 'json',
+        cache : false,
+        processData: false,
+        async: false,
+        beforeSend: function() {
+            $("#boxloadingTela").css({'display':'block'});
+        },
+        success:function(response) {
+            let contador =0;
+            $("#boxloadingTela").css({'display':'none'});
+            for (let i = 0; i < response.length; i++) {
+                contador ++;
+                let curso ;
+                if(response[i].course == null){
+                    curso = "";
+                }else{
+                    curso = response[i].course;
+                }
+                html= html+ '<tr>'+
+                                '<td>'+contador+'</td>'+
+                                '<td>'+response[i].display_name+'</td>'+
+                                '<td>'+response[i].user_nicename+'</td>'+
+                                '<td>'+response[i].user_email+'</td>'+
+                                '<td>'+curso+'</td>'+
+                                '<td>'+response[i].date_recorded+'</td>'+
+                            '</tr>';
+            }
+
+            html = html+'</tbody>'+
+                    '</table>';
+            $('#modalFiltroDashboard').modal('hide');
+        }
+    })
+    return html;
+}
+
+function tableViewCursosPublicados(currentLocation) {
+    let html = '<th></th>'+
+                    '<th>Cod do Curso</th>'+
+                    '<th>Nome do Curso</th>'+
+                    '<th>Duração do Curso</th>'+
+                ' </tr>'+
+            '</thead>'+
+        '<tbody>';
+
+    $.ajax({
+        url:currentLocation+'table/viewCursospublicados',
+        type:"post",
+        data:  "_token="+$('meta[name="csrf-token"]').attr('content'),
+        dataType: 'json',
+        cache : false,
+        processData: false,
+        async: false,
+        beforeSend: function() {
+            $("#boxloadingTela").css({'display':'block'});
+        },
+        success:function(response) {
+            let contador =0;
+            $("#boxloadingTela").css({'display':'none'});
+            for (let i = 0; i < response.length; i++) {
+                contador ++;
+                let curso
+                if(response[i].course == null){
+                    curso = "";
+                }else{
+                    curso = response[i].course;
+                }
+                html= html+ '<tr>'+
+                                '<td>'+contador+'</td>'+
+                                '<td>'+response[i].id_course+'</td>'+
+                                '<td>'+curso+'</td>'+
+                                '<td>'+response[i].duracao+'</td>'+
+                            '</tr>';
+            }
+
+            html = html+'</tbody>'+
+                    '</table>';
+            $('#modalFiltroDashboard').modal('hide');
+        }
+    })
+    return html;
+}
+
+function tableViewAcessoTotal(currentLocation) {
+    let html = '<th></th>'+
+                    '<th>Nome</th>'+
+                    '<th>UserName</th>'+
+                    '<th>E-mail</th>'+
+                    '<th>Data/Hora do Acesso</th>'+
+                ' </tr>'+
+            '</thead>'+
+        '<tbody>';
+
+    $.ajax({
+        url:currentLocation+'table/viewAcessoTotal',
+        type:"post",
+        data:  "_token="+$('meta[name="csrf-token"]').attr('content'),
+        dataType: 'json',
+        cache : false,
+        processData: false,
+        async: false,
+        beforeSend: function() {
+            $("#boxloadingTela").css({'display':'block'});
+        },
+        success:function(response) {
+            let contador =0;
+            $("#boxloadingTela").css({'display':'none'});
+            for (let i = 0; i < response.length; i++) {
+                contador ++;
+                html= html+ '<tr>'+
+                                '<td>'+contador+'</td>'+
+                                '<td>'+response[i].display_name+'</td>'+
+                                '<td>'+response[i].user_nicename+'</td>'+
+                                '<td>'+response[i].user_email+'</td>'+
+                                '<td>'+response[i].DataHora+'</td>'+
+                            '</tr>';
+            }
+
+            html = html+'</tbody>'+
+                    '</table>';
+            $('#modalFiltroDashboard').modal('hide');
+        }
+    })
+    return html;
+}
+
+function tableViewAcessoHoje(currentLocation) {
+    let html = '<th></th>'+
+                    '<th>Nome</th>'+
+                    '<th>UserName</th>'+
+                    '<th>E-mail</th>'+
+                    '<th>Data/Hora do Acesso</th>'+
+                ' </tr>'+
+            '</thead>'+
+        '<tbody>';
+
+    $.ajax({
+        url:currentLocation+'table/viewAcessoHoje',
+        type:"post",
+        data:  "_token="+$('meta[name="csrf-token"]').attr('content'),
+        dataType: 'json',
+        cache : false,
+        processData: false,
+        async: false,
+        beforeSend: function() {
+            $("#boxloadingTela").css({'display':'block'});
+        },
+        success:function(response) {
+            let contador =0;
+            $("#boxloadingTela").css({'display':'none'});
+            for (let i = 0; i < response.length; i++) {
+                contador ++;
+                html= html+ '<tr>'+
+                                '<td>'+contador+'</td>'+
+                                '<td>'+response[i].display_name+'</td>'+
+                                '<td>'+response[i].user_nicename+'</td>'+
+                                '<td>'+response[i].user_email+'</td>'+
+                                '<td>'+response[i].DataHora+'</td>'+
+                            '</tr>';
+            }
+
+            html = html+'</tbody>'+
+                    '</table>';
+            $('#modalFiltroDashboard').modal('hide');
+        }
+    })
+    return html;
+}
+
+function configurarTable(byid) {
+    var table = $('#dataTable').DataTable({
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+    });
+    new $.fn.dataTable.Buttons( table, {
+        buttons: [
+                    { extend: 'csv' , text: 'csv',className:'btn btn-info '},
+                    { extend: 'excel' , text: 'excel',className:'btn btn-info '},
+                    { extend: 'pdf' , text: 'pdf',className:'btn btn-info '},
+                    { extend: 'print' , text: 'Imprimir',className:'btn btn-info '},
+                    { text: 'X',className:'btn btn-light', action: function () {
+                        $("#BoxTable_oneC, #BoxTable_twoC, #BoxTable_threeC, #BoxTable_fourC, #BoxTable_fiveC, #BoxTable_sixC,.btnExport").html('');
+                        $("#BoxTable_one, #BoxTable_two, #BoxTable_three, #BoxTable_four, #BoxTable_five, #BoxTable_six").css({'display':"none"});
+                    }}
+                ]
+    } );
+
+    table.buttons( 1, null ).container().appendTo(
+        $('.btnExport')
+    );
+}
 
 
 
