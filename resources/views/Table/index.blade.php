@@ -1,6 +1,6 @@
 @extends('layoutPadrao.index')
 @section('Titulo')
-Callflex Youniversity - Dashboard
+Callflex Youniversity - Tabela do Dashboard
 @endsection
 
 

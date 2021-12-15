@@ -19,13 +19,70 @@
 </head>
 @include('Alerts.alerts')
 @include('Loading.index')
+<!-- modalCriarCategoria -->
+<div class="modal fade" id="modalConvidarUsuarios" tabindex="-1" role="dialog" aria-labelledby="modalConvidarUsuarios" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCriarCategoria">Convidar funcionarios para o Dashboard</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="formModalConvidarFuncionario">
+                @csrf
+                <center>
+                    <div class="form-group mt-5">
+                        <input type="email" class="form-control w-75" id="emailConvdar" name="email" placeholder="E-mail">
+                        <input type="hidden" id="LinkBaseSite" name="LinkBaseSite" value="{{ env('APP_URL_Local') }}">
+                        <div id="invalidMensagemEmail" class="invalid-feedback">
+                            E-mail inserido invalido
+                        </div>
+                        <small id="emailHelp" class="form-text text-muted">Para convidar o usuario precisa ter acesso @callfle.net.br e deve está cadastrado no YOUniversity.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btnConvidarEmail mt-5 mb-5">Convidar</button>
+                </center>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- modalperfil -->
+<div class="modal fade" id="modalPerfil" tabindex="-1" role="dialog" aria-labelledby="modalPerfil" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCriarCategoria">Convidar funcionarios para o Dashboard</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="formModalConvidarFuncionario">
+                @csrf
+                <center>
+                    <div class="form-group mt-5">
+                        <input type="email" class="form-control w-75" id="emailConvdar" name="email" placeholder="E-mail">
+                        <input type="hidden" id="LinkBaseSite" name="LinkBaseSite" value="{{ env('APP_URL_Local') }}">
+                        <div id="invalidMensagemEmail" class="invalid-feedback">
+                            E-mail inserido invalido
+                        </div>
+                        <small id="emailHelp" class="form-text text-muted">Para convidar o usuario precisa ter acesso @callfle.net.br e deve está cadastrado no YOUniversity.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btnConvidarEmail mt-5 mb-5">Convidar</button>
+                </center>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home')}}">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
+                <img src="{{ asset('img/logoCallflexBranco.png') }}" style="width: 28%">
                 <div class="mx-3">Callflex </div>
             </a>
             <hr class="sidebar-divider my-0">
@@ -34,25 +91,18 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <hr class="sidebar-divider">
-            <div class="sidebar-heading">
-                Perfil de Usuarios
-            </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Categorias</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Categorias:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Gestão de categorias</a>
-                        <a class="collapse-item" href="utilities-border.html">Categorias do usuário</a>
-                    </div>
-                </div>
+             <li class="nav-item active">
+                <a class="nav-link" href="{{route('viewIndex')}}">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Grupos de Usuários</span></a>
             </li>
+            @if ($DadosUser->perfil == "Admin" )
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{route('viewGestaodeUser')}}">
+                        <i class="fas fa-users"></i>
+                        <span>Gestão de Usuário</span></a>
+                </li>
+            @endif
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -73,14 +123,15 @@
 
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!--<a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Perfil
+                                </a>-->
+                                <a class="dropdown-item" onclick="funConvidarUser()">
+                                    <i class="fas fa-user-plus fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Convidar
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -128,5 +179,15 @@
 
 
 </body>
-
+    <script src="{{ asset('js/convidarUser.js') }}"></script>
 </html>
+
+<style>
+    a{
+        cursor: pointer;
+    }
+</style>
+<script>
+
+
+</script>

@@ -26,6 +26,7 @@ $('.formFiltroDashboard').submit(function (e) {
                 $('.divCertificadosCursos').html(response.student_certificate);
                 $('.divCursosPublicados').html(response.Cursos_ativos);
                 $('.divAcessosaoSistema').html(response.Acessos);
+                $('.divAcessosaoSistemaHoje').html(response.AcessosHoje);
                 atualizardadosChart(response.subscribe_course, response.student_certificate, response.Cursos_ativos, response.Cursos_desativados);
                 $('#modalFiltroDashboard').modal('hide');
             }

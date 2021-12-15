@@ -15,9 +15,9 @@ class controllerForgot extends Controller
         return view('forgot.index');
     }
 
-    public function enviarCode(Request $request,controllerRetornoDados $retornoDados)
+    public function enviarCode(Request $request,controllerBancoDados $banco)
     {
-        $dadosUser = $retornoDados->DadosUser($request->email);
+        $dadosUser = $banco->DadosUser($request->email);
         if($dadosUser != null){
             //Gera o codigo randomico para verificação do e-mail
             $Codigo = $this->generateRandomString(6);
@@ -26,7 +26,7 @@ class controllerForgot extends Controller
             //armazena os dados para envio do email
             $email = $request->email;
             Mail::send('mail.code',$data, function ($message) use ($email,$dadosUser) {
-                $message->from('wendel.junior@callflex.net.br', 'Callflex Dashboard');
+                $message->from($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_NAME_ENVIO']);
                 $message->to($email, $dadosUser->nome);
                 $message->subject('codigo de verificação');
             });
@@ -75,9 +75,9 @@ class controllerForgot extends Controller
         }
     }
 
-    public function cadastrarNewSenha(Request $request)
+    public function cadastrarNewSenha(Request $request,controllerBancoDados $banco)
     {
-        if(DB::update('update wp_plugin_usersadm_login set senha = ? where email = ?', [Crypt::encrypt($request->senha),$request->session()->get('CodigoEmail')])){
+        if( $banco->AlterarSenhaUsuario(Crypt::encrypt($request->senha),$request->session()->get('CodigoEmail'))){
             $resposta['validacao'] = true;
             $request->session()->forget('CodigoEmail');
             $request->session()->forget('Codigo');

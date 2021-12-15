@@ -85,7 +85,7 @@
                                                 </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" style="display: none">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" name="lembreme" id="customCheck">
                                                 <label class="custom-control-label" for="customCheck">Lembre-me
@@ -96,7 +96,7 @@
 
                                         </a>
                                         <hr>
-                                        <center><div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_PUBLIC_KEY') }}"></div>
+                                        <center><div class="g-recaptcha" id="Valrecaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_PUBLIC_KEY') }}"></div></center>
                                         <label class="lbUrl" style="display: none">{{route('realizarLogin')}}</label>
                                         <label class="lbUrlHome" style="display: none">{{route('home')}}</label>
                                     </form>

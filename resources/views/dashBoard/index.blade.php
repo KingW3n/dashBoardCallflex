@@ -36,8 +36,6 @@ Callflex Youniversity - Dashboard
                                 @foreach ($dadosCategoria as $key =>$value )
                                     @if ($value->status == "Ativo")
                                         <option value="{{$value->ID}}">{{$value->categoria}}</option>
-                                    @else
-                                        <option value="{{$value->ID}}">{{$value->categoria}} (Desativado)</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -127,9 +125,9 @@ Callflex Youniversity - Dashboard
         </div>
 
         <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_one" style="display: none;">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_oneT" style="float: right;"></h6>
-                <div class="btnExport btn-group"></div>
+            <div class="card-header py-3" style="height: 70px;">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_oneT" style=" float: left;"></h6>
+                <div class="btnExport btn-group" style=" float: right;"></div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -163,9 +161,9 @@ Callflex Youniversity - Dashboard
         </div>
 
         <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_two" style="display: none;">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_twoT"></h6>
-                <div class="btnExport btn-group"></div>
+            <div class="card-header py-3" style="height: 70px;">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_twoT" style=" float: left;"></h6>
+                <div class="btnExport btn-group" style=" float: right;"></div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -235,9 +233,9 @@ Callflex Youniversity - Dashboard
         </div>
 
         <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_four" style="display: none;">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_fourT"></h6>
-                <div class="btnExport btn-group"></div>
+            <div class="card-header py-3" style="height: 70px;">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_fourT" style=" float: left;"></h6>
+                <div class="btnExport btn-group" style=" float: right;"></div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -271,9 +269,9 @@ Callflex Youniversity - Dashboard
         </div>
 
         <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_five" style="display: none;">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_fiveT"></h6>
-                <div class="btnExport btn-group"></div>
+            <div class="card-header py-3" style="height: 70px;">
+                <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_fiveT" style=" float: left;"></h6>
+                <div class="btnExport btn-group" style=" float: right;"></div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -291,7 +289,7 @@ Callflex Youniversity - Dashboard
                             <center>
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Acessos Hoje</div>
-                                <div class="h1 mb-0 font-weight-bold text-gray-800">
+                                <div class="h1 mb-0 font-weight-bold text-gray-800 divAcessosaoSistemaHoje">
                                     {{$acessoHoje}}
                                 </div>
                             </center>
@@ -307,9 +305,9 @@ Callflex Youniversity - Dashboard
     </div>
 
     <div class=" col-xl-4 col-md-6 mb-4 CardDashboard card shadow mb-4 mt-4 col-xl-12" id="BoxTable_six" style="display: none;">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_sixT"></h6>
-            <div class="btnExport btn-group"></div>
+        <div class="card-header py-3" style="height: 70px;">
+            <h6 class="m-0 font-weight-bold text-primary textTipo" id="BoxTable_sixT" style=" float: left;"></h6>
+            <div class="btnExport btn-group" style=" float: right;"></div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -333,14 +331,7 @@ Callflex Youniversity - Dashboard
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+
                     </div>
                 </div>
                 <!-- Card Body -->
@@ -371,14 +362,7 @@ Callflex Youniversity - Dashboard
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+
                     </div>
                 </div>
                 <!-- Card Body -->
@@ -409,14 +393,7 @@ Callflex Youniversity - Dashboard
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+
                     </div>
                 </div>
                 <!-- Card Body -->
@@ -439,14 +416,7 @@ Callflex Youniversity - Dashboard
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+
                     </div>
                 </div>
                 <!-- Card Body -->
@@ -497,11 +467,14 @@ Callflex Youniversity - Dashboard
 <script src="{{asset('js/dashboard.js')}}"></script>
 <script>
     var largura = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    console.log(largura);
+
     var dadosAcessos=[ {{$acessoHoje}} , {{$acessosSemana}} , {{$acessosMes}} , {{$acessosPrimeiroSemestre}} , {{$acessosSegndoSemestre}} ,{{$acessosAno}}];
     let arrayAnos = [ {{$AnosDosAcessos[0]['Ano']}} ,  {{$AnosDosAcessos[1]['Ano']}}, {{$AnosDosAcessos[2]['Ano']}}, {{$AnosDosAcessos[3]['Ano']}},{{$AnosDosAcessos[4]['Ano']}}];
     let arrayAcessos = [ {{$AnosDosAcessos[0]['Acessos']}} ,  {{$AnosDosAcessos[1]['Acessos']}}, {{$AnosDosAcessos[2]['Acessos']}}, {{$AnosDosAcessos[3]['Acessos']}},{{$AnosDosAcessos[4]['Acessos']}}]
     DadosIniciais({{$inscricao}},{{$certificado}},{{$cursosPublicados}},{{$cursosDespublicados}},dadosAcessos, arrayAnos, arrayAcessos);
+
+
+
 
 </script>
 <style>

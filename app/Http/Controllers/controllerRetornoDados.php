@@ -87,22 +87,16 @@ class controllerRetornoDados extends Controller
             $resposta['Cursos_ativos'] = $this->DashboardCourseCount("Ativo");
             $resposta['Cursos_desativados'] = $this->DashboardCourseCount("Desativado");
             $resposta['Acessos'] = $this->AcessosTotalCount();
+            $resposta['AcessosHoje'] = $this->AcessosHojeCount(Date("Y-m-d"));
         }else{
-
-            $resposta['users'] = DB::table('wp_users')
-            ->join('wp_plugin_tbaux_user_catetoria','users.ID','=','wp_plugin_tbaux_user_catetoria.ID_user')
-            ->join('wp_plugin_tbaux_user_catetoria','wp_plugin_tbaux_user_catetoria.ID_categoria','=',$funcionario)->count();
-
-            $resposta['student_certificate']= DB::table('wp_bp_activity')->where('type','=', 'student_certificate')
-            ->join('wp_plugin_tbaux_user_catetoria','student_certificate.user_id','=','wp_plugin_tbaux_user_catetoria.ID_user')
-            ->join('wp_plugin_tbaux_user_catetoria','wp_plugin_tbaux_user_catetoria.ID_categoria','=',$funcionario)->count();
-
-            $resposta['subscribe_course'] = DB::table('wp_bp_activity')->where('type','=', 'subscribe_course')
-            ->join('wp_plugin_tbaux_user_catetoria','student_certificate.user_id','=','wp_plugin_tbaux_user_catetoria.ID_user')
-            ->join('wp_plugin_tbaux_user_catetoria','wp_plugin_tbaux_user_catetoria.ID_categoria','=',$funcionario)->count();
-
+            $resposta['users'] = count(DB::select('select u.ID FROM lms.wp_users u, lms.wp_plugin_tbaux_user_catetoria z where u.ID = z.ID_user and z.ID_categoria = ?', [$funcionario]));
+            $resposta['student_certificate']= count(DB::select("SELECT b.id FROM lms.wp_bp_activity b, lms.wp_plugin_tbaux_user_catetoria z  WHERE b.user_id = z.ID_user and z.ID_categoria = ? and  type='student_certificate'", [$funcionario]));
+            $resposta['subscribe_course'] = count(DB::select("SELECT b.id FROM lms.wp_bp_activity b, lms.wp_plugin_tbaux_user_catetoria z  WHERE b.user_id = z.ID_user and z.ID_categoria = ? and  type='subscribe_course'", [$funcionario]));
             $resposta['Cursos_ativos'] = $this->DashboardCourseCount("Ativo");
-            $resposta['Acessos'] = $this->AcessosTotalCount();
+            $resposta['Cursos_desativados'] = $this->DashboardCourseCount("Desativado");
+            $resposta['Acessos'] = count(DB::select("SELECT l.ID FROM lms.wp_plugin_log_user l, lms.wp_plugin_tbaux_user_catetoria z  WHERE l.ID_user = z.ID_user and z.ID_categoria = ? ", [$funcionario]));
+            $resposta['AcessosHoje'] = count(DB::select("SELECT l.ID FROM lms.wp_plugin_log_user l, lms.wp_plugin_tbaux_user_catetoria z  WHERE l.ID_user = z.ID_user and z.ID_categoria = ? and l.DataHora LIKE '%".Date("Y-m-d")."%' ", [$funcionario]));
+
         }
 
 
@@ -115,9 +109,17 @@ class controllerRetornoDados extends Controller
             $resposta['student_certificate'] = DB::table('wp_bp_activity')->where('type','=', 'student_certificate')->where('date_recorded','LIKE','%'.$data.'%')->count();
             $resposta['subscribe_course'] = DB::table('wp_bp_activity')->where('type','=', 'subscribe_course')->where('date_recorded','LIKE','%'.$data.'%')->count();
             $resposta['Cursos_ativos'] = DB::table('wp_dashboard_course')->where('Status','=', 'Ativo')->where('data_Create','LIKE','%'.$data.'%')->count();
+            $resposta['Cursos_desativados'] = DB::table('wp_dashboard_course')->where('Status','=', 'Desativado')->where('data_Create','LIKE','%'.$data.'%')->count();
             $resposta['Acessos'] = DB::table('wp_plugin_log_user')->where('DataHora','LIKE','%'.$data.'%')->count();
+            $resposta['AcessosHoje'] = $this->AcessosHojeCount(Date("Y-m-d"));
         }else{
-
+            $resposta['users'] = count(DB::select('select u.ID FROM lms.wp_users u, lms.wp_plugin_tbaux_user_catetoria z where u.ID = z.ID_user and z.ID_categoria = ? and u.user_registered LIKE "%'.$data.'%" ', [$funcionario]));
+            $resposta['student_certificate']= count(DB::select('SELECT b.id FROM lms.wp_bp_activity b, lms.wp_plugin_tbaux_user_catetoria z  WHERE b.user_id = z.ID_user and z.ID_categoria = ? and  type="student_certificate" and b.date_recorded LIKE "%'.$data.'%"', [$funcionario]));
+            $resposta['subscribe_course'] = count(DB::select('SELECT b.id FROM lms.wp_bp_activity b, lms.wp_plugin_tbaux_user_catetoria z  WHERE b.user_id = z.ID_user and z.ID_categoria = ? and  type="subscribe_course" and b.date_recorded LIKE "%'.$data.'%"', [$funcionario]));
+            $resposta['Cursos_ativos'] = DB::table('wp_dashboard_course')->where('Status','=', 'Ativo')->where('data_Create','LIKE','%'.$data.'%')->count();
+            $resposta['Cursos_desativados'] = DB::table('wp_dashboard_course')->where('Status','=', 'Desativado')->where('data_Create','LIKE','%'.$data.'%')->count();
+            $resposta['Acessos'] = DB::table('wp_plugin_log_user')->where('DataHora','LIKE','%'.$data.'%')->count();
+            $resposta['AcessosHoje'] = count(DB::select("SELECT l.ID FROM lms.wp_plugin_log_user l, lms.wp_plugin_tbaux_user_catetoria z  WHERE l.ID_user = z.ID_user and z.ID_categoria = ? and l.DataHora LIKE '%".Date("Y-m-d")."%' ", [$funcionario]));
         }
 
         return $resposta;
@@ -130,9 +132,17 @@ class controllerRetornoDados extends Controller
             $resposta['student_certificate']= DB::table('wp_bp_activity')->where('type','=', 'student_certificate')->whereBetween('date_recorded',array($data, $data2))->count();
             $resposta['subscribe_course'] = DB::table('wp_bp_activity')->where('type','=', 'subscribe_course')->whereBetween('date_recorded',array($data, $data2))->count();
             $resposta['Cursos_ativos'] = DB::table('wp_dashboard_course')->where('Status','=', 'Ativo')->whereBetween('data_Create',array($data,$data2))->count();
+            $resposta['Cursos_desativados'] = DB::table('wp_dashboard_course')->where('Status','=', 'Desativado')->whereBetween('data_Create',array($data,$data2))->count();
             $resposta['Acessos'] = DB::table('wp_plugin_log_user')->whereBetween('DataHora',array($data,$data2))->count();
+            $resposta['AcessosHoje'] = $this->AcessosHojeCount(Date("Y-m-d"));
         }else{
-
+            $resposta['users'] = count(DB::select('select u.ID FROM lms.wp_users u, lms.wp_plugin_tbaux_user_catetoria z where u.ID = z.ID_user and z.ID_categoria = ? and u.user_registered BETWEEN ? AND ?', [$funcionario,$data,$data2]));
+            $resposta['student_certificate']= count(DB::select('SELECT b.id FROM lms.wp_bp_activity b, lms.wp_plugin_tbaux_user_catetoria z  WHERE b.user_id = z.ID_user and z.ID_categoria = ? and  type="student_certificate" and b.date_recorded BETWEEN ? AND ?', [$funcionario,$data,$data2]));
+            $resposta['subscribe_course'] = count(DB::select('SELECT b.id FROM lms.wp_bp_activity b, lms.wp_plugin_tbaux_user_catetoria z  WHERE b.user_id = z.ID_user and z.ID_categoria = ? and  type="subscribe_course" and b.date_recorded BETWEEN ? AND ?', [$funcionario,$data,$data2]));
+            $resposta['Cursos_ativos'] = DB::table('wp_dashboard_course')->where('Status','=', 'Ativo')->whereBetween('data_Create',array($data,$data2))->count();
+            $resposta['Cursos_desativados'] = DB::table('wp_dashboard_course')->where('Status','=', 'Desativado')->whereBetween('data_Create',array($data,$data2))->count();
+            $resposta['Acessos'] = DB::table('wp_plugin_log_user')->whereBetween('DataHora',array($data,$data2))->count();
+            $resposta['AcessosHoje'] = count(DB::select("SELECT l.ID FROM lms.wp_plugin_log_user l, lms.wp_plugin_tbaux_user_catetoria z  WHERE l.ID_user = z.ID_user and z.ID_categoria = ? and l.DataHora LIKE '%".Date("Y-m-d")."%' ", [$funcionario]));
         }
         return $resposta;
     }

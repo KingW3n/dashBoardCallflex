@@ -12,17 +12,18 @@ $('.formUser').submit(function(e){
         let formDados = new FormData();
         formDados.append('email',emailValue);
         formDados.append('senha',senhaValue);
-        formDados.append('recaptch',recaptchValue);
+        formDados.append('grecptcha',recaptchValue);
         formDados.append('check',checkLembreMe);
         formDados.append('_token',token);
-
         $.ajax({
             url:lbUrl,
             type:"post",
-            data: $(this).serialize(),
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: formDados,
             dataType: 'json',
             cache : false,
             processData: false,
+            contentType: false,
             beforeSend: function () {
                 $("#boxloadingTela").css({'display':'block'});
             },

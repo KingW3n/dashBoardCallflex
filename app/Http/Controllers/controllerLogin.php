@@ -13,43 +13,48 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 class controllerLogin extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request,controllerBancoDados $banco)
     {
+        $banco->atualizarTabelaCursos();
+        $banco->criarTabelaBanco();
         return view('login.index')
         ->with('email', );
     }
 
-    public function realizarLogin(Request $request )
+    public function realizarLogin(Request $request,controllerBancoDados $banco )
     {
-        $this->verificarToken($request->_token);
-        $user = DB::table('wp_plugin_usersadm_login')
-        ->where('email',$request->email)
-        ->join('wp_users', 'wp_plugin_usersadm_login.email', '=','wp_users.user_email' )
-        ->select('wp_plugin_usersadm_login.*','wp_users.display_name')
-        ->first();
+        if($this->verificarToken($request->grecptcha)){
+            $user = $banco->realizarLogin($request->email);
 
-        if($user !== null){
-            if(Crypt::decrypt($user->senha) !== $request->senha){
-                $resposta['login'] = false;
-                $resposta['mensagem'] = "Senha incorreta tente novamente!";
+            if($user !== null){
+                if(Crypt::decrypt($user->senha) !== $request->senha){
+                    $resposta['login'] = false;
+                    $resposta['mensagem'] = "Senha incorreta tente novamente!";
 
-                return json_encode($resposta);
+                    return json_encode($resposta);
+                }else{
+                    $request->session()->put('logado','Yes');
+                    $request->session()->put('email',$user->email);
+                    $resposta['login'] = true;
+                    $resposta['mensagem'] = "Logado com sucesso";
+
+                    return json_encode($resposta);
+                }
+
+
             }else{
-                $request->session()->put('logado','Yes');
-                $request->session()->put('email',$user->email);
-                $resposta['login'] = true;
-                $resposta['mensagem'] = "Logado com sucesso";
+                $resposta['login'] = false;
+                $resposta['mensagem'] = "Não foi possivel localizar o E-mail em nosso banco de dados!";
 
                 return json_encode($resposta);
             }
-
-
         }else{
             $resposta['login'] = false;
-            $resposta['mensagem'] = "Não foi possivel localizar o E-mail em nosso banco de dados!";
+            $resposta['mensagem'] = "Não foi possivel Validar recarregue a pagina e tente novamente";
 
             return json_encode($resposta);
         }
+
     }
 
     public function Realizarlogout(Request $request)
@@ -65,17 +70,17 @@ class controllerLogin extends Controller
             $secret = env('GOOGLE_RECAPTCHA_PRIVATE_KEY');
             $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$token);
             $responseData = json_decode($verifyResponse);
-            if( !isset($responseData->success) ){
-                $resposta['login'] = false;
-                $resposta['mensagem'] = "Não foi possivel realizar o login tente novamente!";
-
-                return json_encode($resposta);
+            if( isset($responseData->success) ){
+                if( $responseData->success === true ){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
             }
         }else{
-            $resposta['login'] = false;
-            $resposta['mensagem'] = "Não foi possivel realizar o login tente novamente!";
-
-            return json_encode($resposta);
+            return false;
         }
     }
 
